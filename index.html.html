@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة قسم المحاسبة - المستوى الأول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-hover: #1e40af;
+            --secondary: #0f172a;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #334155;
+            --text-light: #64748b;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Login Screen */
+        .login-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-card h2 {
+            color: var(--secondary);
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+
+        .login-card p {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 13px;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* Header & Main App */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px 20px;
+            flex: 1;
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .section-header h1 {
+            font-size: 24px;
+            color: var(--secondary);
+        }
+
+        .badge {
+            background-color: #dbeafe;
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Subjects Grid */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .subject-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-card h3 {
+            font-size: 18px;
+            color: var(--secondary);
+            margin-bottom: 12px;
+        }
+
+        .subject-card p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        /* Material View */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .breadcrumb span {
+            cursor: pointer;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .breadcrumb span:hover {
+            text-decoration: underline;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .file-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .file-card .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .file-card h4 {
+            font-size: 16px;
+            color: var(--secondary);
+            margin-bottom: 12px;
+        }
+
+        .btn-view {
+            display: inline-block;
+            width: 100%;
+            padding: 8px;
+            background-color: var(--bg);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-view:hover {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .admin-controls {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #059669;
+            font-weight: 600;
+        }
+
+        .lectures-list {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .lecture-item {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 13px;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-wrapper">
+        <div class="login-card">
+            <h2>بوابة قسم المحاسبة</h2>
+            <p>تسجيل الدخول للمنصة التعليمية</p>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>اسم المستخدم</label>
+                    <input type="text" id="username" placeholder="أدخل اسم المستخدم" required>
+                </div>
+                <div class="input-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+                </div>
+                <button type="submit" class="btn-submit">دخول</button>
+                <div id="errorMsg" class="error-msg">اسم المستخدم أو كلمة المرور غير صحيحة</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Platform View -->
+    <div id="appScreen" class="hidden">
+        <header>
+            <div>
+                <strong>منصة قسم المحاسبة</strong>
+            </div>
+            <div class="user-info">
+                <span id="userBadge" class="badge"></span>
+                <button onclick="handleLogout()" class="btn-logout">خروج</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Subjects View -->
+            <div id="subjectsView">
+                <div class="section-header">
+                    <h1>مواد الفصل الدراسي الأول (Semester 1)</h1>
+                    <span class="badge">6 مواد</span>
+                </div>
+                <div class="subjects-grid" id="subjectsGrid"></div>
+            </div>
+
+            <!-- Material Detail View -->
+            <div id="materialView" class="hidden">
+                <div class="breadcrumb">
+                    <span onclick="showSubjects()">المواد</span> / <strong id="currentSubjectTitle"></strong>
+                </div>
+                <div class="section-header">
+                    <h1 id="subjectHeader"></h1>
+                </div>
+                <div class="files-grid" id="filesGrid"></div>
+                <div id="contentDetailSection" class="hidden" style="margin-top: 30px;">
+                    <h3 id="categoryTitle" style="margin-bottom: 15px; color: var(--secondary);"></h3>
+                    <div id="lecturesContainer" class="lectures-list"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            جميع الحقوق محفوظة &copy; قسم المحاسبة
+        </footer>
+    </div>
+
+    <script>
+        // Data & Users Definition
+        const USERS = {
+            'Amr2007': { pass: '9999', role: 'student', name: 'عمرو' },
+            'Menna2006': { pass: '8888', role: 'student', name: 'منة' },
+            'MAHMOUD2006': { pass: 'Mahmoud2006', role: 'admin', name: 'محمود (الآدمن)' }
+        };
+
+        const SUBJECTS = [
+            'الاقتصاد الدولي',
+            'اداره التمويل والاستثمار',
+            'اصول المراجعه',
+            'محاسبه التكاليف',
+            'أساليب التنبؤ الاحصائي 1',
+            'الرقابه والمراجعة الداخلية'
+        ];
+
+        const CATEGORIES = [
+            { id: 'lectures', title: 'محاضرات', icon: '📚' },
+            { id: 'sections', title: 'سكاشن', icon: '📝' },
+            { id: 'quizzes', title: 'كويزات', icon: '✏️' },
+            { id: 'book', title: 'كتاب الماده', icon: '📖' },
+            { id: 'important', title: 'حاجات مهمه للماده', icon: '📌' }
+        ];
+
+        // محاضرات مادة محاسبة التكاليف المضافة
+        const COST_ACCOUNTING_LECTURES = [
+            { id: 1, title: 'المحاضرة 1: الإطار العام لمحاسبة التكاليف والمفاهيم الأساسية', fileUrl: '#' },
+            { id: 2, title: 'المحاضرة 2: تبويب وتصنيف التكاليف (عناصر التكاليف)', fileUrl: '#' },
+            { id: 3, title: 'المحاضرة 3: نظريات تحميل التكاليف والمقومات الأساسية', fileUrl: '#' },
+            { id: 4, title: 'المحاضرة 4: المحاسبة عن تكلفة المواد والمخزون', fileUrl: '#' },
+            { id: 5, title: 'المحاضرة 5: المحاسبة عن تكلفة الأجور والعمالة', fileUrl: '#' },
+            { id: 6, title: 'المحاضرة 6: التكاليف الصناعية غير المباشرة وطرق توزيعها', fileUrl: '#' }
+        ];
+
+        let currentUser = null;
+        let currentSubject = '';
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const userIn = document.getElementById('username').value.trim();
+            const passIn = document.getElementById('password').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (USERS[userIn] && USERS[userIn].pass === passIn) {
+                currentUser = { ...USERS[userIn], username: userIn };
+                errorMsg.style.display = 'none';
+                initApp();
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            document.getElementById('loginForm').reset();
+            document.getElementById('appScreen').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+        }
+
+        function initApp() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('appScreen').classList.remove('hidden');
+            document.getElementById('userBadge').textContent = currentUser.name;
+
+            renderSubjects();
+            showSubjects();
+        }
+
+        function renderSubjects() {
+            const grid = document.getElementById('subjectsGrid');
+            grid.innerHTML = '';
+
+            SUBJECTS.forEach((subject, index) => {
+                const card = document.createElement('div');
+                card.className = 'subject-card';
+                card.onclick = () => showMaterial(subject);
+                card.innerHTML = `
+                    <div>
+                        <h3>${subject}</h3>
+                        <p>انقر لعرض جميع ملفات ومحتويات المادة</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function showSubjects() {
+            document.getElementById('subjectsView').classList.remove('hidden');
+            document.getElementById('materialView').classList.add('hidden');
+            document.getElementById('contentDetailSection').classList.add('hidden');
+        }
+
+        function showMaterial(subjectName) {
+            currentSubject = subjectName;
+            document.getElementById('subjectsView').classList.add('hidden');
+            document.getElementById('materialView').classList.remove('hidden');
+            document.getElementById('contentDetailSection').classList.add('hidden');
+
+            document.getElementById('currentSubjectTitle').textContent = subjectName;
+            document.getElementById('subjectHeader').textContent = subjectName;
+
+            const grid = document.getElementById('filesGrid');
+            grid.innerHTML = '';
+
+            CATEGORIES.forEach(cat => {
+                const card = document.createElement('div');
+                card.className = 'file-card';
+                
+                let adminExtra = currentUser.role === 'admin' ? '<div class="admin-controls">صلاحية التعديل مجهزة</div>' : '';
+
+                card.innerHTML = `
+                    <span class="icon">${cat.icon}</span>
+                    <h4>${cat.title}</h4>
+                    <button onclick="openCategory('${cat.id}', '${cat.title}')" class="btn-view">فتح القسم</button>
+                    ${adminExtra}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openCategory(catId, catTitle) {
+            const detailSection = document.getElementById('contentDetailSection');
+            const categoryTitle = document.getElementById('categoryTitle');
+            const container = document.getElementById('lecturesContainer');
+
+            categoryTitle.textContent = `${catTitle} - ${currentSubject}`;
+            container.innerHTML = '';
+
+            if (currentSubject === 'محاسبه التكاليف' && catId === 'lectures') {
+                COST_ACCOUNTING_LECTURES.forEach(lec => {
+                    const item = document.createElement('div');
+                    item.className = 'lecture-item';
+                    item.innerHTML = `
+                        <span><strong>${lec.title}</strong></span>
+                        <a href="${lec.fileUrl}" onclick="alert('جاري تحميل/فتح: ${lec.title}')" class="btn-view" style="width: auto; padding: 6px 16px;">عرض / تحميل PDF</a>
+                    `;
+                    container.appendChild(item);
+                });
+            } else {
+                container.innerHTML = `<div style="text-align: center; color: var(--text-light); padding: 20px; background: white; border-radius: 8px;">لا توجد ملفات مرفوعة حالياً في قسم (${catTitle}) لمادة (${currentSubject}).</div>`;
+            }
+
+            detailSection.classList.remove('hidden');
+            detailSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
